@@ -29,71 +29,7 @@ import sun.misc.BASE64Encoder;
  */
 public class SQLHandler {
     
-    public void startNewGame(String hostIp, String authCode) throws ClassNotFoundException, SQLException{
-        Class.forName("org.sqlite.JDBC");
-        String dbName = "C:\\CAH\\CAH-Black.db";
-        String Jdbc = "jdbc:sqlite";
-        String DbUrl = Jdbc + ":" + dbName;
-        int timeout = 120;
-        String makeTable = "CREATE TABLE IF NOT EXISTS games (id int NOT NULL, ip text, authcode text, players int NOT NULL)";
-        String makeSelect = "SELECT authcode from games";
-        String makeGetId = "SELECT id from games";
-        
-        
-        Connection con = DriverManager.getConnection(DbUrl);
-        Statement st = con.createStatement();
-        st.setQueryTimeout(timeout);
-        st.executeUpdate(makeTable);
-        
-        
-        ResultSet getId = st.executeQuery(makeGetId);
-        int last = 0;
-        while(getId.next()){
-            String res = getId.getString("id");
-            //String resID = getId.getString("authcode");
-            last = Integer.parseInt(res);
-        }
-        getId.close();
-        last++;
-        
-        
-        String makeInsert = "INSERT INTO games VALUES("+last+",'"+hostIp+"','"+authCode+"', 1)";
-        st.executeUpdate(makeInsert);
-        ResultSet rs = st.executeQuery(makeSelect);
-        
-        while(rs.next()){
-            String sResult = rs.getString("authCode");
-            //System.out.println(sResult);
-        }
-        rs.close();
-       
-        st.close();
-        con.close();
-        //String makeGetId = "SELECT id from black";
-        
-    }
-    
-    public void removeCreatedGame(String hostip) throws ClassNotFoundException, SQLException{
-        Class.forName("org.sqlite.JDBC");
-        String dbName = "C:\\CAH\\CAH-Black.db";
-        String Jdbc = "jdbc:sqlite";
-        String DbUrl = Jdbc + ":" + dbName;
-        
-        Connection con = DriverManager.getConnection(DbUrl);
-        Statement st = con.createStatement();
-                
-        String remLine = "DELETE FROM games WHERE ip = '"+hostip+"'";
-        int del = st.executeUpdate(remLine);
-        if(del==1){
-            System.out.println("Game Deleted");
-        }else{
-            System.out.println("Problems with removing the game");
-        }
-        
-        st.close();
-        con.close();
-    }
-    
+    /*
     public String joinGame(String oauth) throws SQLException, ClassNotFoundException{
         Class.forName("org.sqlite.JDBC");
         String dbName = "C:\\CAH\\CAH-Black.db";
@@ -118,7 +54,6 @@ public class SQLHandler {
                 //System.out.println(rs.getRow());
                 rs.close();
                 sPlayers++;
-                    removeCreatedGame(sIP);
                int updateGame = st.executeUpdate("INSERT INTO games VALUES("+sID+",'"+sIP+"','"+sResult+"',"+sPlayers+")");
                if(updateGame==1){
                    System.out.println("Game updated");
@@ -137,7 +72,7 @@ public class SQLHandler {
         con.close();
         return null;
     }
-    
+    */
     
     
     public String generateAuthCode(String plaintext) throws NoSuchAlgorithmException, UnsupportedEncodingException{

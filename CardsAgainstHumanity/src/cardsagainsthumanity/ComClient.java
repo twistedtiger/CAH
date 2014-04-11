@@ -8,7 +8,8 @@ package cardsagainsthumanity;
 
 import java.io.*;
 import java.net.*;
-import javax.swing.SwingWorker;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,8 +25,26 @@ public class ComClient implements Runnable{
     public ComClient(String serverName, int serverPort) throws IOException{
         socket = new Socket(serverName, serverPort);
                 start();
-                System.out.println("Weird");
     }
+        
+    public void sendGameRequest(String status,String oauth){
+        try {
+            output.writeUTF(status+oauth);
+            output.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ComClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void sendCardUpdate(String status, String oauth, String cardNum){
+        try {
+            output.writeUTF(status+oauth+":CardNum:"+cardNum);
+            output.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ComClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
     public void handle(String msg){
         if(msg.equals("terminatedCommunication")){

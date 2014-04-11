@@ -18,11 +18,9 @@ public class CardsAgainstHumans {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        // TODO code application logic here
-        ComClient client = new ComClient("80.202.62.205",35353);
-        
-        //GameGUI game = new GameGUI();
-        //game.init();
+        // TODO code application logic here        
+        GameGUI game = new GameGUI();
+        game.init();
     }
     
 }
